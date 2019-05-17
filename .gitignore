@@ -1,0 +1,8 @@
+.sonarlint
+.vscode
+.idea
+.DS_Store
+*.fasta
+*.fa
+**/.git
+**/ref
