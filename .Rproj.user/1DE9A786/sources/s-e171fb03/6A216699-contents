@@ -13,7 +13,7 @@
 #' @importFrom tibble tibble as_tibble column_to_rownames
 #' @importFrom dplyr arrange
 #'
-#' @return
+#' @return anndata$AnnData object
 #' @export
 #' 
 convert_to_anndata <- function(object,

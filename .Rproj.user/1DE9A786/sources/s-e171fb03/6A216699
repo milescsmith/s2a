@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2829961109",
+    "hash" : "0",
     "id" : "6A216699",
-    "lastKnownWriteTime" : 1558120586,
-    "last_content_update" : 1558120586,
+    "lastKnownWriteTime" : 1558122618,
+    "last_content_update" : 1558122618195,
     "path" : "~/workspace/s2a/R/s2a.R",
     "project_path" : "R/s2a.R",
     "properties" : {
+        "cursorPosition" : "15,33",
+        "scrollLine" : "10"
     },
     "read_only" : false,
     "read_only_alternatives" : [

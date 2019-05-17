@@ -14,6 +14,9 @@ convert_to_anndata(object, assay = "RNA", slot = "data")
 \item{slot}{Seurat assay slot to convert. If `data` or `scale.data` is used, 
 the `counts` slot (if available) is added to `adata.raw`}
 }
+\value{
+anndata$AnnData object
+}
 \description{
 Convert Seurat object to AnnData object
 }
