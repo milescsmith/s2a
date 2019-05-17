@@ -13,7 +13,7 @@ setup(name='s2a',
                    'Intended Audience :: Science/Research',
                    'License :: OSI Approved :: BSD License',
                    'Programming Language :: Python :: 3.6', 'Programming Language :: Python :: 3.7'],
-      packages=["s2a_py"],
+      packages=["py"],
       keywords=['Seurat', "AnnData", "scRNA-seq"],
       python_requires='>=3.6',
       package_dir={
