@@ -1,3 +1,3 @@
 # s2a
 
-Functions to add in converting Seurat objects to AnnData objects
+R functions and a helper Python package for converting Seurat (v3) objects into AnnData objects for use in Scanpy.
