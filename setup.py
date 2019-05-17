@@ -13,11 +13,11 @@ setup(name='s2a',
                    'Intended Audience :: Science/Research',
                    'License :: OSI Approved :: BSD License',
                    'Programming Language :: Python :: 3.6', 'Programming Language :: Python :: 3.7'],
-      packages=["py"],
+      packages=["s2a"],
       keywords=['Seurat', "AnnData", "scRNA-seq"],
       python_requires='>=3.6',
       package_dir={
-            's2a': 'py'
+            's2a': 's2a'
       },
       install_requires=['pandas', 'numpy', 'anndata', 'typing'],
       )

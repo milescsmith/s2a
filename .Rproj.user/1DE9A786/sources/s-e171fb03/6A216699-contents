@@ -30,21 +30,19 @@ convert_to_anndata <- function(object,
     as.matrix() %>%
     t()
   
+  adata <- anndata$AnnData(exprDat)
+
+  adata$obs_names <- rownames(exprDat)
+  adata$var_names <- colnames(exprDat)
+  
   if (slot != "counts" & "counts" %in% names(object[[assay]])) {
-    raw_exprDat <- GetAssayData(object = object, 
+    adata$raw <- GetAssayData(object = object, 
                              assay = assay,
                              slot = "counts") %>% 
       as.matrix() %>%
       t()
   }
 
-  adata <- anndata$AnnData(exprDat)
-
-  adata$obs_names <- rownames(exprDat)
-  adata$var_names <- colnames(exprDat)
-  
-  adata$raw <- raw_exprDat
-  
   adata <- s2a$convert$add_meta_data(adata = adata, 
                              md = object@meta.data)
   

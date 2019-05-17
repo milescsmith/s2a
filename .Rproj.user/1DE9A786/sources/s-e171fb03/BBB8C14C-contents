@@ -21,7 +21,7 @@ Imports:
     stringr,
     tibble
 Remotes:
-    github::satijalab/seurat
+    github::satijalab/Seurat
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
