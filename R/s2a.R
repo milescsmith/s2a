@@ -72,5 +72,7 @@ convert_to_anndata <- function(object,
                              feature_loadings = feature_loadings,
                              reduction_sd = object[[i]]@stdev))
   }
+  
+  
   return(adata)
 }

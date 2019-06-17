@@ -39,11 +39,14 @@ def add_reduction(adata: AnnData,
                    reduction_key: str,
                    cell_embeddings: np.ndarray,
                    feature_loadings: np.ndarray,
-                   reduction_sd: np.ndarray) -> AnnData:
+                   reduction_sd: np.array) -> AnnData:
     
     adata.obsm[f"X_{reduction_key}"] = cell_embeddings
     if np.size(feature_loadings) > 0:
         adata.varm["PCs"] = feature_loadings
     if len(reduction_sd) > 0:
-        adata.uns[reduction_key]["variance"] = np.array(reduction_sd)
+        variance_dict = {"variance" : np.array(reduction_sd),
+                         "variance_ratio" : np.array(reduction_sd/reduction_sd.sum())}
+        adata.uns[reduction_key] = variance_dict
     return adata
+
