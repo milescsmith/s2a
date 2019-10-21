@@ -43,10 +43,10 @@ convert_to_anndata <- function(object,
       t()
   }
 
-  adata <- s2a$convert$add_meta_data(adata = adata, 
+  adata <- s2a$add_meta_data(adata = adata, 
                              md = object@meta.data)
   
-  adata <- s2a$convert$add_feature_data(adata = adata,
+  adata <- s2a$add_feature_data(adata = adata,
                                 var_features = object[[assay]]@var.features,
                                 meta_features = object[[assay]]@meta.features)
   for (i in names(object@reductions)){
@@ -66,7 +66,7 @@ convert_to_anndata <- function(object,
       feature_loadings <- object[[i]]@feature.loadings %>% as.matrix()
     }
     try(
-      adata <- s2a$convert$add_reduction(adata = adata,
+      adata <- s2a$add_reduction(adata = adata,
                              reduction_key = i,
                              cell_embeddings = object[[i]]@cell.embeddings,
                              feature_loadings = feature_loadings,
