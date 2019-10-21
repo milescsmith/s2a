@@ -32,7 +32,7 @@ def add_feature_data(
             "dispersions": meta_features["sct.variance"],
             "residuals_dispersions": meta_features["sct.residual_variance"],
             "residual_mean": meta_features["sct.residual_mean"],
-            "detection_rate": meta_features["detection_rate"],
+            "detection_rate": meta_features["sct.detection_rate"],
         }
     elif "vst.mean" in meta_features.columns:
         var_dict = {
