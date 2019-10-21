@@ -1,13 +1,18 @@
 from anndata import AnnData
 from pandas import DataFrame
 import numpy as np
-from typing import List
+from typing import List, Optional
 
 
 def add_meta_data(adata: AnnData, 
-                  md: DataFrame) -> AnnData:
-    md.index = md["Unnamed: 0"]
-    md.drop(["Unnamed: 0"], axis=1)
+                  md: DataFrame,
+                  column_for_rownames: Optional[str] = None) -> AnnData:
+    if "Unnamed: 0" in md.columns:
+        md.index = md["Unnamed: 0"]
+        md.drop(["Unnamed: 0"], axis=1)
+    if column_for_rownames:
+        md.index = md[column_for_rownames]
+        md.drop([column_for_rownames], axis=1)
     adata.obs = md
     return adata
 
