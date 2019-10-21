@@ -54,7 +54,7 @@ convert_to_anndata <- function(object,
     if ((nrow(object[[i]]@feature.loadings) > 0) & 
         (nrow(object[[i]]@feature.loadings) < nrow(object))){
       feature_loadings = object[[i]]@feature.loadings
-      new_loadings <- tibble(feature = rownames(object)[rownames(object) %nin% rownames(feature_loadings)])
+      new_loadings <- tibble(feature = rownames(object)[!rownames(object) %in% rownames(feature_loadings)])
       new_loadings[,colnames(feature_loadings)] <- 0
       feature_loadings %<>% as_tibble(rownames = "feature") %>% 
         rbind(new_loadings) %>% 
