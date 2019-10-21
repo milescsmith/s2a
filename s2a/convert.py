@@ -22,13 +22,13 @@ def add_feature_data(
     adata: AnnData, var_features: List[str], meta_features: DataFrame
 ) -> AnnData:
 
-    if "sct.mean" in meta_features.columns:
+    if "sct.gmean" in meta_features.columns:
         var_dict = {
             "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X),
             "highly_variable": [
                 True if _ in var_features else False for _ in adata.var.index
             ],
-            "means": meta_features["sct.mean"],
+            "means": meta_features["sct.gmean"],
             "dispersions": meta_features["sct.variance"],
             "residuals_dispersions": meta_features["sct.residual_variance"],
             "residual_mean": meta_features["sct.residual_mean"],
