@@ -12,21 +12,24 @@
 #' @importFrom stringr str_glue
 #' @importFrom tibble tibble as_tibble column_to_rownames
 #' @importFrom dplyr arrange
+#' @importFrom rlang `%||%`
 #'
 #' @return anndata$AnnData object
 #' @export
 #' 
 convert_to_anndata <- function(object,
-                               assay = "RNA",
+                               assay = NULL,
                                slot = "data"){
   s2a <- import(module = "s2a", delay_load = TRUE)
   anndata <- import(module = "anndata", delay_load = TRUE)
   
   adata <- anndata$AnnData()
   
+  assay <- assay %||% DefaultAssay(object)
+  
   exprDat <- GetAssayData(object = object, 
                           assay = assay,
-                          slot = slot) %>% 
+                          slot = "data") %>% 
     as.matrix() %>%
     t()
   
@@ -72,7 +75,6 @@ convert_to_anndata <- function(object,
                              feature_loadings = feature_loadings,
                              reduction_sd = object[[i]]@stdev))
   }
-  
   
   return(adata)
 }
