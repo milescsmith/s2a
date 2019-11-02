@@ -12,7 +12,7 @@
 #' @importFrom stringr str_glue
 #' @importFrom tibble tibble as_tibble column_to_rownames
 #' @importFrom dplyr arrange
-#' @importFrom rlang `%||%`
+#' @importFrom rlang %||%
 #'
 #' @return anndata$AnnData object
 #' @export
