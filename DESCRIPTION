@@ -1,7 +1,7 @@
 Type: Package
 Package: s2a
 Title: Convert Seurat object to AnnData objects
-Version: 0.0.9000
+Version: 0.1.000
 Authors@R: 
     person(given = "Miles",
            family = "Smith",
@@ -19,7 +19,8 @@ Imports:
     reticulate,
     Seurat,
     stringr,
-    tibble
+    tibble,
+    Matrix
 Remotes:
     github::satijalab/Seurat
 Encoding: UTF-8

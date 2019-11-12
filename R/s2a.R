@@ -12,7 +12,8 @@
 #' @importFrom stringr str_glue
 #' @importFrom tibble tibble as_tibble column_to_rownames
 #' @importFrom dplyr arrange
-#' @importFrom rlang `%||%`
+#' @importFrom rlang %||%
+#' @importFrom Matrix t
 #'
 #' @return anndata$AnnData object
 #' @export
@@ -29,21 +30,20 @@ convert_to_anndata <- function(object,
   
   exprDat <- GetAssayData(object = object, 
                           assay = assay,
-                          slot = "data") %>% 
-    as.matrix() %>%
-    t()
+                          slot = "data")
+  texprDat <- t(exprDat)
   
-  adata <- anndata$AnnData(exprDat)
+  adata <- anndata$AnnData(texprDat)
 
-  adata$obs_names <- rownames(exprDat)
-  adata$var_names <- colnames(exprDat)
+  adata$obs_names <- rownames(texprDat)
+  adata$var_names <- colnames(texprDat)
   
   if (slot != "counts" & "counts" %in% names(object[[assay]])) {
-    adata$raw <- GetAssayData(object = object, 
-                             assay = assay,
-                             slot = "counts") %>% 
-      as.matrix() %>%
-      t()
+    raw <- GetAssayData(object = object,
+                        assay = assay,
+                        slot = "counts")
+    traw <- t(raw)
+    adata$raw <- traw
   }
 
   adata <- s2a$add_meta_data(adata = adata, 
@@ -66,7 +66,7 @@ convert_to_anndata <- function(object,
         column_to_rownames('feature') %>%
         as.matrix()
     } else {
-      feature_loadings <- object[[i]]@feature.loadings %>% as.matrix()
+      feature_loadings <- object[[i]]@feature.loadings
     }
     try(
       adata <- s2a$add_reduction(adata = adata,
