@@ -24,7 +24,7 @@ def add_feature_data(
 
     if "sct.gmean" in meta_features.columns:
         var_dict = {
-            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X),
+            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X.toarray()),
             "highly_variable": [
                 True if _ in var_features else False for _ in adata.var.index
             ],
@@ -36,7 +36,7 @@ def add_feature_data(
         }
     elif "vst.mean" in meta_features.columns:
         var_dict = {
-            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X),
+            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X.toarray()),
             "highly_variable": [
                 True if _ in var_features else False for _ in adata.var.index
             ],

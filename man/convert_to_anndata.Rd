@@ -4,7 +4,7 @@
 \alias{convert_to_anndata}
 \title{s2a}
 \usage{
-convert_to_anndata(object, assay = "RNA", slot = "data")
+convert_to_anndata(object, assay = NULL, slot = "data")
 }
 \arguments{
 \item{object}{Seurat object to convert}
