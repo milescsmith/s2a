@@ -3,6 +3,7 @@ from pandas import DataFrame
 import numpy as np
 from typing import List, Optional
 from collections import OrderedDict
+from scipy.sparse.csc import csc_matrix
 
 
 def add_meta_data(
@@ -21,10 +22,15 @@ def add_meta_data(
 def add_feature_data(
     adata: AnnData, var_features: List[str], meta_features: DataFrame
 ) -> AnnData:
+    
+    if isinstance(adata.X, csc_matrix):
+        exprs = adata.X.toarray()
+    elif isinstance(adata.X, np.ndarray):
+        exprs = adata.X
 
     if "sct.gmean" in meta_features.columns:
         var_dict = {
-            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X.toarray()),
+            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, exprs),
             "highly_variable": [
                 True if _ in var_features else False for _ in adata.var.index
             ],
@@ -36,7 +42,7 @@ def add_feature_data(
         }
     elif "vst.mean" in meta_features.columns:
         var_dict = {
-            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X.toarray()),
+            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, exprs),
             "highly_variable": [
                 True if _ in var_features else False for _ in adata.var.index
             ],
@@ -46,7 +52,7 @@ def add_feature_data(
         }
     else:
         var_dict = {
-            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, adata.X),
+            "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, exprs),
             "highly_variable": [
                 True if _ in var_features else False for _ in adata.var.index
             ],
