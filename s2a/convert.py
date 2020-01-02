@@ -68,14 +68,14 @@ def add_reduction(
     adata: AnnData,
     reduction_key: str,
     cell_embeddings: np.ndarray,
-    feature_loadings: np.ndarray,
-    reduction_sd: np.ndarray,
+    feature_loadings: Optional[np.ndarray] = None,
+    reduction_sd: Optional[np.ndarray] = None,
 ) -> AnnData:
 
     adata.obsm[f"X_{reduction_key}"] = cell_embeddings
-    if feature_loadings.size > 0:
+    if feature_loadings and feature_loadings.size > 0:
         adata.varm["PCs"] = feature_loadings
-    if len(reduction_sd) > 0:
+    if reduction_sd and len(reduction_sd) > 0:
         reduc = OrderedDict()
         reduc["variance"] = reduction_sd
         adata.uns[reduction_key] = reduc
