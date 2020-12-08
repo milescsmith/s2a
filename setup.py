@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 with open("README.rst") as readme_file:
     readme = readme_file.read()
 
-with open("HISTORY.rst") as history_file:
+with open("CHANGELOG.md") as history_file:
     history = history_file.read()
 
 with open("requirements.txt") as requirements_file:
@@ -44,6 +44,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://gitlab.com/milothepsychic/s2a",
-    version="0.1.2",
+    version="0.1.3",
     zip_safe=False,
 )
