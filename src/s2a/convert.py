@@ -1,8 +1,9 @@
+from collections import OrderedDict
+from typing import List, Optional
+
+import numpy as np
 from anndata import AnnData
 from pandas import DataFrame
-import numpy as np
-from typing import List, Optional
-from collections import OrderedDict
 from scipy.sparse.csc import csc_matrix
 
 
@@ -40,7 +41,7 @@ def add_feature_data(
                 "residuals_dispersions": meta_features["sct.residual_variance"],
                 "residual_mean": meta_features["sct.residual_mean"],
                 "detection_rate": meta_features["sct.detection_rate"],
-           }
+            }
         elif "vst.mean" in meta_features.columns:
             var_dict = {
                 "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, exprs),
@@ -60,7 +61,7 @@ def add_feature_data(
                 "means": meta_features["mean"],
                 "dispersions": meta_features["variance"],
                 "dispersions_norm": meta_features["variance.standardized"],
-                }
+            }
         adata.var = DataFrame.from_dict(data=var_dict)
 
     return adata
