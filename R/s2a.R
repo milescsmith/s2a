@@ -88,24 +88,28 @@ convert_to_anndata <-
   }
   
   
-  for (i in names(object@reductions)){
+  walk(names(object@reductions), function(i){
     print(i)
     if ((nrow(object[[i]]@feature.loadings) > 0           ) & 
         (nrow(object[[i]]@feature.loadings) < nrow(object))){
       
+      feature_loadings <-
+        object[[i]]@feature.loadings |>
+        tibble::as_tibble(rownames = "feature")
       
-      feature_loadings = object[[i]]@feature.loadings
+      component_names <- colnames(select(feature_loadings, -1))
+      
+      missing <- rownames(!object[["RNA"]]@counts)[rownames(object[["RNA"]]@counts) %in% feature_loadings[["feature"]]]
+      
       new_loadings <-
         tibble::tibble(
-          feature = rownames(object)[!rownames(object) %in% rownames(feature_loadings)]
+          feature = missing
           )
       
-      new_loadings[,colnames(feature_loadings)] <- 0
+      new_loadings[,component_names] <- 0
       
       feature_loadings <-
-        feature_loadings |>
-        tibble::as_tibble(rownames = "feature") |>
-        rbind(new_loadings) |>
+        bind_rows(feature_loadings, new_loadings) |>
         dplyr::arrange(feature) |>
         tibble::column_to_rownames('feature') |>
         as.matrix()
@@ -122,7 +126,7 @@ convert_to_anndata <-
           reduction_sd     = object[[i]]@stdev
           )
       )
-  }
+  })
   
   return(adata)
 }

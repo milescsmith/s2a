@@ -1,3 +1,8 @@
+# [0.3.1]
+## Fixed
+  - Fix for not all features being included in transfer of a reduction object's
+    feature loadings
+
 # [0.3.0]
 ## Fixed
   - Now check to see if columns in object[[assay]]@meta.features exist before
