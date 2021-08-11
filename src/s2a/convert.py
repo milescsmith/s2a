@@ -21,7 +21,7 @@ def add_meta_data(
 
 
 def add_feature_data(
-    adata: AnnData, var_features: List[str], meta_features: DataFrame
+    adata: AnnData, var_features: List[str], meta_features: DataFrame = None
 ) -> AnnData:
 
     if isinstance(adata.X, csc_matrix):
@@ -29,7 +29,7 @@ def add_feature_data(
     elif isinstance(adata.X, np.ndarray):
         exprs = adata.X
 
-    if meta_features is not None:
+    if meta_features is not None and len(meta_features.columns) > 0:
         if "sct.gmean" in meta_features.columns:
             var_dict = {
                 "n_cells": np.apply_along_axis(lambda x: (x > 0).sum(), 0, exprs),
@@ -37,10 +37,18 @@ def add_feature_data(
                     True if _ in var_features else False for _ in adata.var.index
                 ],
                 "means": meta_features["sct.gmean"],
-                "dispersions": meta_features["sct.variance"],
-                "residuals_dispersions": meta_features["sct.residual_variance"],
-                "residual_mean": meta_features["sct.residual_mean"],
-                "detection_rate": meta_features["sct.detection_rate"],
+                "dispersions": meta_features["sct.variance"]
+                if "sct.variance" in meta_features.columns
+                else np.zeros(len(meta_features)),
+                "residuals_dispersions": meta_features["sct.residual_variance"]
+                if "sct.residual_variance" in meta_features.columns
+                else np.zeros(len(meta_features)),
+                "residual_mean": meta_features["sct.residual_mean"]
+                if "sct.residual_mean" in meta_features.columns
+                else np.zeros(len(meta_features)),
+                "detection_rate": meta_features["sct.detection_rate"]
+                if "sct.detection_rate" in meta_features.columns
+                else np.zeros(len(meta_features)),
             }
         elif "vst.mean" in meta_features.columns:
             var_dict = {
@@ -49,8 +57,12 @@ def add_feature_data(
                     True if _ in var_features else False for _ in adata.var.index
                 ],
                 "means": meta_features["vst.mean"],
-                "dispersions": meta_features["vst.variance"],
-                "dispersions_norm": meta_features["vst.variance.standardized"],
+                "dispersions": meta_features["vst.variance"]
+                if "vst.variance" in meta_features.columns
+                else np.zeros(len(meta_features)),
+                "dispersions_norm": meta_features["vst.variance.standardized"]
+                if "vst.variance.standardized" in meta_features.columns
+                else np.zeros(len(meta_features)),
             }
         else:
             var_dict = {
@@ -58,9 +70,15 @@ def add_feature_data(
                 "highly_variable": [
                     True if _ in var_features else False for _ in adata.var.index
                 ],
-                "means": meta_features["mean"],
-                "dispersions": meta_features["variance"],
-                "dispersions_norm": meta_features["variance.standardized"],
+                "means": meta_features["mean"]
+                if "mean" in meta_features.columns
+                else np.zeros(len(meta_features)),
+                "dispersions": meta_features["variance"]
+                if "variance" in meta_features.columns
+                else np.zeros(len(meta_features)),
+                "dispersions_norm": meta_features["variance.standardized"]
+                if "variance.standardized" in meta_features.columns
+                else np.zeros(len(meta_features)),
             }
         adata.var = DataFrame.from_dict(data=var_dict)
 

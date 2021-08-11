@@ -499,7 +499,7 @@ typing-extensions = ">=3.7.4"
 
 [[package]]
 name = "virtualenv"
-version = "20.7.1"
+version = "20.7.2"
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
@@ -864,8 +864,8 @@ typing-inspect = [
     {file = "typing_inspect-0.7.1.tar.gz", hash = "sha256:047d4097d9b17f46531bf6f014356111a1b6fb821a24fe7ac909853ca2a782aa"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.7.1-py2.py3-none-any.whl", hash = "sha256:73863dc3be1efe6ee638e77495c0c195a6384ae7b15c561f3ceb2698ae7267c1"},
-    {file = "virtualenv-20.7.1.tar.gz", hash = "sha256:57bcb59c5898818bd555b1e0cfcf668bd6204bc2b53ad0e70a52413bd790f9e4"},
+    {file = "virtualenv-20.7.2-py2.py3-none-any.whl", hash = "sha256:e4670891b3a03eb071748c569a87cceaefbf643c5bac46d996c5a45c34aa0f06"},
+    {file = "virtualenv-20.7.2.tar.gz", hash = "sha256:9ef4e8ee4710826e98ff3075c9a4739e2cb1040de6a2a8d35db0055840dc96a0"},
 ]
 xlrd = [
     {file = "xlrd-1.2.0-py2.py3-none-any.whl", hash = "sha256:e551fb498759fa3a5384a94ccd4c3c02eb7c00ea424426e212ac0c57be9dfbde"},

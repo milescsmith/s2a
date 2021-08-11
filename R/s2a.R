@@ -47,7 +47,7 @@ convert_to_anndata <-
       slot   = "data"
       )
   
-  texprDat <- t(exprDat)
+  texprDat <- Matrix::t(exprDat)
   
   adata <- anndata$AnnData(texprDat)
 
@@ -96,17 +96,18 @@ convert_to_anndata <-
       
       feature_loadings = object[[i]]@feature.loadings
       new_loadings <-
-        tibble(
+        tibble::tibble(
           feature = rownames(object)[!rownames(object) %in% rownames(feature_loadings)]
           )
       
       new_loadings[,colnames(feature_loadings)] <- 0
       
-      feature_loadings %<>% as_tibble(rownames = "feature") %>% 
-        rbind(new_loadings) %>% 
-        arrange(feature) %>% 
-        as.data.frame() %>% 
-        column_to_rownames('feature') %>%
+      feature_loadings <-
+        feature_loadings |>
+        tibble::as_tibble(rownames = "feature") |>
+        rbind(new_loadings) |>
+        dplyr::arrange(feature) |>
+        tibble::column_to_rownames('feature') |>
         as.matrix()
     } else {
       feature_loadings <- object[[i]]@feature.loadings
