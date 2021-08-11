@@ -6,7 +6,11 @@
 *.fa
 **/.git
 **/ref
-.Rproj.user
+.Rproj.user/
+*.Rproj
+*.RData
+.Rhistory
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
