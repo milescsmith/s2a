@@ -1,7 +1,7 @@
 Type: Package
 Package: s2a
 Title: Convert Seurat object to AnnData objects
-Version: 0.3.2
+Version: 0.3.0
 Authors@R: 
     person(given = "Miles",
            family = "Smith",
