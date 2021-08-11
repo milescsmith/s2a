@@ -6,7 +6,7 @@
 #' @param slot Seurat assay slot to convert. If `data` or `scale.data` is used, 
 #' the `counts` slot (if available) is added to `adata.raw`
 #' 
-#' @importFrom dplyr arrange
+#' @importFrom dplyr arrange select bind_rows
 #' @importFrom magrittr %>%
 #' @importFrom Matrix t
 #' @importFrom purrr walk
@@ -89,24 +89,28 @@ convert_to_anndata <-
   }
   
   
-  for (i in names(object@reductions)){
+  purrr::walk(names(object@reductions), function(i){
     print(i)
-    if ((nrow(object[[i]]@feature.loadings) > 0           ) & 
+    if ((nrow(object[[i]]@feature.loadings) > 0) & 
         (nrow(object[[i]]@feature.loadings) < nrow(object))){
       
+      feature_loadings <-
+        object[[i]]@feature.loadings |>
+        tibble::as_tibble(rownames = "feature")
       
-      feature_loadings = object[[i]]@feature.loadings
+      component_names <- colnames(dplyr::select(feature_loadings, -1))
+      
+      missing <- rownames(object)[!rownames(object) %in% feature_loadings[["feature"]]]
+      
       new_loadings <-
         tibble::tibble(
-          feature = rownames(object)[!rownames(object) %in% rownames(feature_loadings)]
+          feature = missing
           )
       
-      new_loadings[,colnames(feature_loadings)] <- 0
+      new_loadings[,component_names] <- 0
       
       feature_loadings <-
-        feature_loadings |>
-        tibble::as_tibble(rownames = "feature") |>
-        rbind(new_loadings) |>
+        dplyr::bind_rows(feature_loadings, new_loadings) |>
         dplyr::arrange(feature) |>
         tibble::column_to_rownames('feature') |>
         as.matrix()
@@ -123,7 +127,7 @@ convert_to_anndata <-
           reduction_sd     = object[[i]]@stdev
           )
       )
-  }
+  })
   
   return(adata)
 }
