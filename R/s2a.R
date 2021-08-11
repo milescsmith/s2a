@@ -6,13 +6,14 @@
 #' @param slot Seurat assay slot to convert. If `data` or `scale.data` is used, 
 #' the `counts` slot (if available) is added to `adata.raw`
 #' 
-#' @importFrom reticulate import
-#' @importFrom Seurat GetAssayData
-#' @importFrom magrittr %>%
-#' @importFrom tibble tibble as_tibble column_to_rownames
 #' @importFrom dplyr arrange
-#' @importFrom rlang %||%
+#' @importFrom magrittr %>%
 #' @importFrom Matrix t
+#' @importFrom purrr walk
+#' @importFrom reticulate import
+#' @importFrom rlang %||%
+#' @importFrom Seurat GetAssayData
+#' @importFrom tibble tibble as_tibble column_to_rownames
 #'
 #' @return anndata$AnnData object
 #' @export
@@ -88,7 +89,7 @@ convert_to_anndata <-
   }
   
   
-  walk(names(object@reductions), function(i){
+  purrr::walk(names(object@reductions), function(i){
     print(i)
     if ((nrow(object[[i]]@feature.loadings) > 0           ) & 
         (nrow(object[[i]]@feature.loadings) < nrow(object))){
