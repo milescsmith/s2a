@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "s2a"
-version = "0.2.0"
+version = "0.3.0"
 description = "glue to link Seurat to anndata objects"
 authors = ["Miles Smith <miles-smith@omrf.org>"]
 license = "BSD-3"
