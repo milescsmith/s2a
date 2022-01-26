@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "s2a"
-version = "0.3.4"
+version = "0.3.5"
 description = "glue to link Seurat to anndata objects"
 authors = ["Miles Smith <miles-smith@omrf.org>"]
 license = "BSD-3"
@@ -17,7 +17,7 @@ homepage = "https://gitlab.com/milothepsychic/s2a"
 keywords=["Seurat", "AnnData", "scRNA-seq", "Scanpy"]
 
 [tool.poetry.dependencies]
-python = "^3.8,<3.10"
+python = ">=3.8.3,<3.10"
 pandas = "^1.4"
 numpy = "^1.21"
 anndata = ">=0.8.0rc1"
